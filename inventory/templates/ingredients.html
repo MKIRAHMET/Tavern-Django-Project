@@ -1,0 +1,14 @@
+{% extends "base.html"%}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static '/styles.css' %}">
+
+<h1>Ingredients</h1>
+<ul>
+  {% for ingredient in ingredients %}
+    <li>{{ ingredient.name }} - {{ ingredient.quantity }} {{ ingredient.unit }}</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

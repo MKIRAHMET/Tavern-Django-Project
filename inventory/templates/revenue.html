@@ -1,0 +1,13 @@
+{% extends "base.html"%}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static '/styles.css' %}">
+
+<div class="vote-block">
+
+<h1>Revenue and Profit</h1>
+<p>Total Revenue: ${{ revenue }}</p>
+<p>Total Profit: ${{ profit }}</p>
+
+{% endblock %}
