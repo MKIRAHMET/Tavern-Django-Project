@@ -28,6 +28,8 @@
           <a class="nav-item" href="{% url 'menu_items' %}">Menu Items</a>
           <a class="nav-item" href="{% url 'purchases' %}">Purchases</a>
           <a class="nav-item" href="{% url 'revenue' %}">Revenue</a>
+          <a class = "logout-button" href="{% url "logout" %}">Log out</a>
+
         </nav>
       </header>
       <main>{% block content %}{% endblock %}</main>

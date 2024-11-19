@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %} 
-{% block title %}Tavern Menu{% endblock %}
+{% block title %}Recipe Requirements{% endblock %}
 {% block content %}
   <div>
     <h2>Menu</h2>
@@ -13,11 +13,11 @@
         </tr>
       </thead>
       <tbody>
-        {% for item in menuitems %}
+        {% for item in recipe %}
         <tr>
-          <td><a href="{% url "update_menuitem" pk=item.id %}">{{ item.title }}</a></td> 
+          <td><a href="{% url "update_requirements" pk=item.id %}">{{ item.title }}</a></td> 
           <td>${{ item.price }}</td>
-          <td><a href="{% url "deleteitem" pk=item.id %}">Delete Item</a></td> 
+          <td><a href="{% url "delete_requirements" pk=item.id %}">Delete Item</a></td> 
         </tr>
         
         {% empty %}

@@ -1,15 +1,31 @@
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, TemplateView, ListView, DeleteView, CreateView
 from .models import Ingredient, MenuItem, Purchase, RecipeRequirements
-from .forms import MenuItemForm, IngredientForm, RecipeRequirementsForm,UpdateInventoryForm
+from .forms import MenuItemForm, PurchaseForm, IngredientForm, RecipeRequirementsForm,UpdateInventoryForm
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import logout
 
 def index(request):
     return render(request, 'index.html')
 
-  
+class SignUp(CreateView):
+  form_class = UserCreationForm
+  success_url = reverse_lazy("login")
+  template_name = "registration/signup.html"
+
+
+def logout_request(request):
+  logout(request)
+  return redirect("index")
+
+
+
+    
 # View ingredients in the inventory
-class IngredientView(TemplateView):
+class IngredientView(LoginRequiredMixin, TemplateView):
     model = Ingredient
     template_name = 'ingredients.html'  # Replace with your actual template path
     
@@ -21,27 +37,32 @@ class IngredientView(TemplateView):
 # Delete ingredients from the inventory
 class DeleteIngredientView(DeleteView):
     model = Ingredient
-    template_name = 'routes/delete_ingredient.html'
+    template_name = 'delete_ingredient.html'
     success_url = reverse_lazy('ingredient_list')
 
-class MenuItemView(ListView):
+class MenuItemView(LoginRequiredMixin, ListView):
     model = MenuItem
     template_name = "menuitems.html"
-    context_object_name = "menuitems"  # Custom name for context
+    context_object_name = "menuitems"  
+
+class RecipeView(ListView):
+    model = RecipeRequirements
+    template_name = "recipe.html"
+    context_object_name = "recipe"  
 
     def get_queryset(self):
-        print(MenuItem.objects.all())  # Debug to confirm data is being fetched
+        print(MenuItem.objects.all())  
         return MenuItem.objects.all()
     
 # View the purchases made at the restaurant
 class PurchaseView(ListView):
     model = Purchase
-    template_name = 'purchases.html'  # Replace with your actual template path
-    context_object_name = 'purchases'  # Name to use for the object list in the template
+    template_name = 'purchases.html'  
+    context_object_name = 'purchases'  
 
 # View the profit and revenue for the restaurant
 class RevenueView(TemplateView):
-    template_name = 'revenue.html'  # Replace with your actual template path
+    template_name = 'revenue.html'  
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -69,9 +90,15 @@ class AddItemMenuView(CreateView):
     form_class = MenuItemForm
     template_name = 'menucreate.html'
     
+
+class UpdateMenuRequirementsView(UpdateView):
+    model = MenuItem
+    form_class = MenuItemForm
+    template_name = 'updateitem.html'
+    
 class DeleteItemMenuView(DeleteView):
     model = MenuItem
-    success_url = 'menu/'
+    success_url = reverse_lazy('menu_items')
     template_name = 'delete_item.html'
 
 class AddIngredientInventoryView(CreateView):
@@ -83,19 +110,25 @@ class AddRecipeRequirementsView(CreateView):
     model = RecipeRequirements
     form_class = RecipeRequirementsForm
     template_name = 'addrequirement.html'
+    
 class DeleteRecipeRequirementsView(DeleteView):
     model = RecipeRequirements
-    success_url = 'ingredients/'
+    success_url = reverse_lazy('recipe')
     template_name = 'delete_requirement.html'
 
 class AddPurchaseView(CreateView):
-    model = MenuItem
-    form_class = MenuItemForm
+    model = Purchase
+    form_class = PurchaseForm
     template_name = 'purchasecreate.html'
 class DeletePurchaseView(DeleteView):
     model = Purchase
-    success_url = 'purchases/'
+    success_url = ''
     template_name = 'delete_purchase.html'
+    
+class UpdatePurchaseView(UpdateView):
+    model = MenuItem
+    template_name = "updateitem.html"
+    form_class = MenuItemForm
 
    # a page to update the inventory for an existing ingredient
 class UpdateInventoryView(UpdateView):
@@ -103,3 +136,9 @@ class UpdateInventoryView(UpdateView):
     template_name = 'update_inventory.html'
     form_class = UpdateInventoryForm
 
+
+class UpdateRecipeRequirementsView(UpdateView):
+    model = RecipeRequirements
+    form_class = RecipeRequirementsForm
+    template_name = 'updaterequirements.html'
+    

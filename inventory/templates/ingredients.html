@@ -6,9 +6,11 @@
 
 <h1>Ingredients</h1>
 <ul>
-  {% for ingredient in ingredients %}
-    <li>{{ ingredient.name }} - {{ ingredient.quantity }} {{ ingredient.unit }}</li>
-  {% endfor %}
+  {% for item in ingredients %}
+   <li> <a href="{% url "update_inventory" pk=item.id %}">{{ item.name }} - {{ item.quantity }} {{ item.unit }}</a></li>
+    {% endfor %}
+    <li><a href="{% url "add_ingredient" %}">Add Item</a>
+    </li>
 </ul>
 
 {% endblock %}
