@@ -11,9 +11,34 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import json
+from django.core.exceptions import ImproperlyConfigured
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# Before deploy
+# 1.create keys.json file 
+#ex. {
+#    "SECRETKEY": "writeyoursecretkeyhere"
+# }
+#2.uncomment below
+# # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+# # Quick-start development settings - unsuitable for production
+# # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+# KEYSDIR = str(BASE_DIR)+"/keys.json"
+
+# with open(KEYSDIR) as k:
+#     project_keys = json.loads(k.read())
+
+# def getKey(setting,project_keys=project_keys):
+#     try:
+#         return project_keys[setting]
+#     except KeyError:
+#         errorMessage = "Set the {} env var".format(setting)
+#         raise ImproperlyConfigured(errorMessage)
+# # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -26,7 +51,7 @@ SECRET_KEY = 'django-insecure-4sze2_cc6_byp$4+vqteo%68qqxa!r14tr^tqslz_^4#v)o20b
 DEBUG = True
 
 ALLOWED_HOSTS = ["0.0.0.0"]
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/account/login/'
 
 # Application definition
 

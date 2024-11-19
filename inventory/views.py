@@ -24,7 +24,7 @@ def logout_request(request):
 # View ingredients in the inventory
 class IngredientView(LoginRequiredMixin, TemplateView):
     model = Ingredient
-    template_name = 'ingredients.html'  # Replace with your actual template path
+    template_name = 'ingredients.html' 
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
