@@ -64,7 +64,6 @@ class RevenueView(TemplateView):
         context['profit'] = profit
         return context
 
-    #a page to add an item to the menu
 class AddItemMenuView(CreateView):
     model = MenuItem
     form_class = MenuItemForm
@@ -74,16 +73,12 @@ class DeleteItemMenuView(DeleteView):
     model = MenuItem
     success_url = 'menu/'
     template_name = 'delete_item.html'
-    #a page to add an ingredient to the inventor
+
 class AddIngredientInventoryView(CreateView):
     model = Ingredient
     form_class = IngredientForm
     template_name = 'addingredient.html'
-class DeleteIngredientInventoryView(DeleteView):
-    model = Ingredient
-    success_url = 'ingredients/'
-    template_name = 'delete_ingredient.html'
-    #a page to add the recipe requirements for a menu item
+
 class AddRecipeRequirementsView(CreateView):
     model = RecipeRequirements
     form_class = RecipeRequirementsForm
@@ -92,11 +87,11 @@ class DeleteRecipeRequirementsView(DeleteView):
     model = RecipeRequirements
     success_url = 'ingredients/'
     template_name = 'delete_requirement.html'
-    #a page to record a new purchase of a menu item
+
 class AddPurchaseView(CreateView):
     model = MenuItem
     form_class = MenuItemForm
-    template_name = 'menucreate.html'
+    template_name = 'purchasecreate.html'
 class DeletePurchaseView(DeleteView):
     model = Purchase
     success_url = 'purchases/'
@@ -105,6 +100,6 @@ class DeletePurchaseView(DeleteView):
    # a page to update the inventory for an existing ingredient
 class UpdateInventoryView(UpdateView):
     model = Ingredient
-    template_name = 'routes/update_inventory.html'
+    template_name = 'update_inventory.html'
     form_class = UpdateInventoryForm
 
